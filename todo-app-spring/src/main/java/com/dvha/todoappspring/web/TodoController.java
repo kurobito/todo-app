@@ -39,13 +39,14 @@ public class TodoController {
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
+    /**
+     * Delete task and send whether it has been successfully deleted or not back to client
+     * @param id
+     * @return delete response
+     */
     @DeleteMapping("api/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable int id) {
-        Task task = todoService.deleteById(id);
-        if (task != null) return ResponseEntity.noContent().build();
-
-        return ResponseEntity.notFound().build();
-
+        return (todoService.deleteById(id)) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
 }

@@ -13,6 +13,7 @@ public class TodoRepository {
     private Integer idCounter = 0;
     private List<Task> tasks = new ArrayList<>();
 
+    //initialize faux db with tasks
     {
         Stream.of("Eat", "Sleep", "Repeat").forEach(name -> {
             Task task = new Task();
@@ -24,13 +25,24 @@ public class TodoRepository {
         });
     }
 
+    /**
+     * Returns all tasks in the list
+     *
+     * @return list of tasks
+     */
     public List<Task> fetchAllTasks() {
         return tasks;
     }
 
+    /**
+     * Saves a new task or overwrites an existing one into the repo
+     *
+     * @param task a new or updated task from client to add or update in the repo
+     * @return task that was newly created/updated
+     */
     public Task save(Task task) {
         Task existingTask = findById(task.getId());
-        if (existingTask!= null) {
+        if (existingTask != null) {
             tasks.set(tasks.indexOf(existingTask), task);
         } else {
             deleteById(task.getId());
@@ -40,6 +52,12 @@ public class TodoRepository {
         return task;
     }
 
+    /**
+     * Returns task found by id from repo
+     *
+     * @param id Integer to identify task with
+     * @return found task
+     */
     public Task findById(int id) {
         Task foundTask = null;
 
@@ -49,13 +67,14 @@ public class TodoRepository {
         return foundTask;
     }
 
-    public Task deleteById(int id) {
-        Task task = findById(id);
-        if (task != null) {
-            tasks.remove(task);
-            return task;
-        }
-        return null;
+    /**
+     * Delete task from repo
+     *
+     * @param id Integer to identify which task to delete
+     * @return whether task was removed or not
+     */
+    public Boolean deleteById(int id) {
+        return tasks.remove(findById(id));
     }
 }
 

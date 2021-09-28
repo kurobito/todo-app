@@ -21,7 +21,7 @@ public class TodoService {
         return todoRepo.save(task);
     }
 
-    public Task deleteById(int id){
+    public Boolean deleteById(int id){
         return todoRepo.deleteById(id);
     }
 }
